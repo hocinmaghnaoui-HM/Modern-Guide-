@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modern Guide 🧑‍💻 | دليلك نحو التطور التقني</title>
+  <meta name="description" content="Modern Guide – منصة تعليمية متخصصة في نشر التطبيقات، الكتب الإلكترونية، ودورات التعلم في مجال البرمجة والتقنية. قناة يوتيوب + كتب + تطبيقات." />
+  <meta name="keywords" content="Modern Guide, برمجة, تطبيقات, كتب إلكترونية, دورات تعليمية, يوتيوب, تقنية" />
+  <meta name="author" content="Modern Guide" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Modern Guide 🧑‍💻" />
+  <meta property="og:description" content="تطبيقات، كتب إلكترونية، ودروس فيديو لتطوير مهاراتك التقنية" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://modernguide.dev" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --surface: #111827;
+      --surface2: #1a2233;
+      --accent: #00f5c4;
+      --accent2: #7c3aed;
+      --accent3: #f59e0b;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --border: rgba(0,245,196,0.12);
+      --glow: 0 0 40px rgba(0,245,196,0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    /* ===== NOISE OVERLAY ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(10,14,26,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: -0.5px;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Grid background */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,245,196,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,245,196,0.04) 1px, transparent 1px);
+      background-size: 50px 50px;
+      mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black, transparent);
+    }
+
+    /* Glow orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.25;
+      animation: drift 8s ease-in-out infinite;
+    }
+    .orb-1 { width: 400px; height: 400px; background: var(--accent2); top: 10%; left: -100px; animation-delay: 0s; }
+    .orb-2 { width: 300px; height: 300px; background: var(--accent); bottom: 10%; right: -80px; animation-delay: 3s; }
+    .orb-3 { width: 200px; height: 200px; background: var(--accent3); top: 50%; left: 50%; animation-delay: 6s; }
+
+    @keyframes drift {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 800px; }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 0.4rem 1.2rem;
+      background: rgba(0,245,196,0.08);
+      border: 1px solid rgba(0,245,196,0.25);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-family: 'Space Mono', monospace;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s ease 0.1s both;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s ease 0.3s both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.8rem 1.8rem;
+      border-radius: 10px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0a0e1a;
+      box-shadow: 0 0 30px rgba(0,245,196,0.3);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(0,245,196,0.5); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    /* Stats */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      animation: fadeUp 0.8s ease 0.4s both;
+    }
+
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 900;
+      font-family: 'Space Mono', monospace;
+      color: var(--accent);
+    }
+    .stat-label { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+
+    /* ===== SECTION ===== */
+    section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+
+    .section-header { text-align: center; margin-bottom: 3rem; }
+    .section-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 900;
+    }
+
+    /* ===== APPS GRID ===== */
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .app-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: all 0.35s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .app-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,245,196,0.04), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .app-card:hover { transform: translateY(-4px); border-color: rgba(0,245,196,0.3); box-shadow: var(--glow); }
+    .app-card:hover::before { opacity: 1; }
+
+    .app-icon {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .app-platform {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent3);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .app-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .app-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+
+    .app-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* ===== BOOKS ===== */
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .book-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .book-card:hover { transform: translateY(-4px); border-color: rgba(124,58,237,0.4); box-shadow: 0 0 40px rgba(124,58,237,0.15); }
+
+    .book-cover {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .book-cover-1 { background: linear-gradient(135deg, #1e0533, #7c3aed); }
+    .book-cover-2 { background: linear-gradient(135deg, #0f2027, #00f5c4); }
+    .book-cover-3 { background: linear-gradient(135deg, #1a0800, #f59e0b); }
+    .book-cover-4 { background: linear-gradient(135deg, #000d1a, #3b82f6); }
+
+    .book-info { padding: 1rem; }
+    .book-cat {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent2);
+      letter-spacing: 1px;
+      margin-bottom: 0.3rem;
+    }
+    .book-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .book-level {
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: flex; align-items: center; gap: 4px;
+    }
+
+    /* ===== VIDEOS ===== */
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .video-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .video-card:hover { transform: translateY(-4px); border-color: rgba(239,68,68,0.4); box-shadow: 0 0 40px rgba(239,68,68,0.1); }
+
+    .video-thumb {
+      height: 170px;
+      background: var(--surface2);
+      position: relative;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .thumb-bg-1 { background: linear-gradient(135deg, #1a0a0a, #dc2626); }
+    .thumb-bg-2 { background: linear-gradient(135deg, #0d1117, #1d4ed8); }
+    .thumb-bg-3 { background: linear-gradient(135deg, #0f1a0a, #16a34a); }
+    .thumb-bg-4 { background: linear-gradient(135deg, #1a1a0a, #d97706); }
+    .thumb-bg-5 { background: linear-gradient(135deg, #0a0f1a, #7c3aed); }
+    .thumb-bg-6 { background: linear-gradient(135deg, #1a0f0a, #ea580c); }
+
+    .play-btn {
+      width: 56px; height: 56px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      transition: all 0.3s;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+
+    .video-card:hover .play-btn { background: #ef4444; border-color: #ef4444; transform: scale(1.1); }
+
+    .yt-badge {
+      position: absolute;
+      top: 10px; left: 10px;
+      background: #ef4444;
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .video-info { padding: 1rem; }
+    .video-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.4rem; line-height: 1.4; }
+    .video-meta { font-size: 0.75rem; color: var(--muted); display: flex; gap: 1rem; align-items: center; }
+
+    /* ===== YOUTUBE CTA ===== */
+    .yt-cta {
+      background: linear-gradient(135deg, var(--surface), var(--surface2));
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 3rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin: 2rem auto;
+      max-width: 700px;
+    }
+
+    .yt-cta::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(ellipse at center, rgba(239,68,68,0.08), transparent 60%);
+    }
+
+    .yt-cta h3 { font-size: 1.8rem; font-weight: 900; margin-bottom: 0.5rem; }
+    .yt-cta p { color: var(--muted); margin-bottom: 1.5rem; }
+    .btn-yt { background: #ef4444; color: #fff; }
+    .btn-yt:hover { background: #dc2626; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(239,68,68,0.35); }
+
+    /* ===== CONTACT ===== */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .social-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.2rem;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.3s;
+    }
+
+    .social-card:hover { transform: translateY(-3px); }
+    .social-card i { font-size: 1.6rem; margin-bottom: 0.5rem; display: block; }
+    .social-card span { font-size: 0.85rem; font-weight: 600; }
+
+    .soc-yt:hover { border-color: #ef4444; color: #ef4444; box-shadow: 0 0 25px rgba(239,68,68,0.2); }
+    .soc-tg:hover { border-color: #3b82f6; color: #3b82f6; box-shadow: 0 0 25px rgba(59,130,246,0.2); }
+    .soc-ig:hover { border-color: #e1306c; color: #e1306c; box-shadow: 0 0 25px rgba(225,48,108,0.2); }
+    .soc-tw:hover { border-color: #1da1f2; color: #1da1f2; box-shadow: 0 0 25px rgba(29,161,242,0.2); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    footer span { color: var(--accent); font-weight: 700; }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .stats { gap: 1.5rem; }
+      .hero { padding: 7rem 1.5rem 3rem; }
+    }
+
+    /* Floating dots */
+    .dots-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .dot {
+      position: absolute;
+      width: 3px; height: 3px;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: 0;
+      animation: floatDot linear infinite;
+    }
+
+    @keyframes floatDot {
+      0% { opacity: 0; transform: translateY(100vh) scale(0); }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.3; }
+      100% { opacity: 0; transform: translateY(-10vh) scale(1.5); }
+    }
+
+    /* Inline add content modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      width: min(500px, 90vw);
+      position: relative;
+      animation: fadeUp 0.3s ease;
+    }
+
+    .modal h3 { font-size: 1.2rem; margin-bottom: 1rem; }
+    .modal-close {
+      position: absolute; top: 1rem; left: 1rem;
+      background: none; border: none; color: var(--muted);
+      font-size: 1.2rem; cursor: pointer;
+    }
+    .modal input, .modal textarea, .modal select {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.7rem 1rem;
+      color: var(--text);
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+      outline: none;
+    }
+    .modal input:focus, .modal textarea:focus, .modal select:focus { border-color: var(--accent); }
+    .modal label { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.3rem; display: block; }
+  </style>
+</head>
+<body>
+
+<!-- Floating dots -->
+<div class="dots-bg" id="dots"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">🧑‍💻 Modern Guide</div>
+  <ul class="nav-links">
+    <li><a href="#apps">التطبيقات</a></li>
+    <li><a href="#books">الكتب</a></li>
+    <li><a href="#videos">الفيديوهات</a></li>
+    <li><a href="#contact">تواصل</a></li>
+  </ul>
+  <a href="https://www.youtube.com/@ModernGuide" target="_blank" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.8rem;">
+    <i class="fab fa-youtube"></i> القناة
+  </a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="hero-content">
+    <div class="hero-badge">// Modern Guide 🧑‍💻 — دليلك التقني</div>
+    <h1>تعلّم. طوّر. <span>ابتكر.</span></h1>
+    <p>منصة متخصصة في نشر التطبيقات، الكتب الإلكترونية، ودورات التعلم التقني — محتوى عربي متميز لمن يريد التطور في عالم البرمجة والتقنية.</p>
+    <div class="hero-cta">
+      <a href="#apps" class="btn btn-primary"><i class="fas fa-rocket"></i> استكشف التطبيقات</a>
+      <a href="https://www.youtube.com/@ModernGuide" target="_blank" class="btn btn-outline"><i class="fab fa-youtube"></i> قناة يوتيوب</a>
+    </div>
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-num" id="cnt-apps">0</div>
+        <div class="stat-label">تطبيق منشور</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" id="cnt-books">0</div>
+        <div class="stat-label">كتاب إلكتروني</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" id="cnt-videos">0</div>
+        <div class="stat-label">فيديو تعليمي</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APPS -->
+<section id="apps">
+  <div class="section-header reveal">
+    <span class="section-tag">// my_apps</span>
+    <h2 class="section-title">تطبيقاتي</h2>
+    <p style="color:var(--muted);margin-top:0.5rem">تطبيقات مطورة بأحدث التقنيات — متاحة للتنزيل مجاناً أو للشراء</p>
+  </div>
+  <div class="apps-grid" id="apps-grid">
+    <!-- Cards added dynamically + default samples -->
+    <a href="#" class="app-card reveal">
+      <div class="app-icon">📚</div>
+      <div class="app-platform">Android & iOS</div>
+      <div class="app-name">قارئ الكتب الذكي</div>
+      <div class="app-desc">تطبيق لقراءة الكتب الإلكترونية بواجهة عربية أنيقة ودعم القرآن الكريم وملفات PDF.</div>
+      <div class="app-btn">تنزيل مجاناً <i class="fas fa-arrow-left"></i></div>
+    </a>
+    <a href="#" class="app-card reveal">
+      <div class="app-icon">🗒️</div>
+      <div class="app-platform">Web App</div>
+      <div class="app-name">مدير المهام Pro</div>
+      <div class="app-desc">تطبيق ويب لإدارة مهامك اليومية بنظام Kanban وتتبع الإنتاجية بتقارير تفصيلية.</div>
+      <div class="app-btn">تجربة مجانية <i class="fas fa-arrow-left"></i></div>
+    </a>
+    <a href="#" class="app-card reveal">
+      <div class="app-icon">🤖</div>
+      <div class="app-platform">Android</div>
+      <div class="app-name">مساعد الذكاء</div>
+      <div class="app-desc">مساعد ذكي يعتمد على GPT-4 يتحدث بالعربية ويساعدك في البرمجة والكتابة والبحث.</div>
+      <div class="app-btn">تنزيل الآن <i class="fas fa-arrow-left"></i></div>
+    </a>
+  </div>
+  <div style="text-align:center;margin-top:2rem">
+    <button class="btn btn-outline" onclick="document.getElementById('add-app-modal').classList.add('active')">
+      <i class="fas fa-plus"></i> أضف تطبيقاً جديداً
+    </button>
+  </div>
+</section>
+
+<!-- BOOKS -->
+<section id="books" style="background:linear-gradient(180deg,transparent,rgba(124,58,237,0.03),transparent)">
+  <div class="section-header reveal">
+    <span class="section-tag">// e_books</span>
+    <h2 class="section-title">الكتب الإلكترونية</h2>
+    <p style="color:var(--muted);margin-top:0.5rem">كتب شاملة لتعلم البرمجة والتقنية — باللغة العربية</p>
+  </div>
+  <div class="books-grid">
+    <a href="#" class="book-card reveal">
+      <div class="book-cover book-cover-1">🐍</div>
+      <div class="book-info">
+        <div class="book-cat">Python</div>
+        <div class="book-title">Python من الصفر للاحتراف</div>
+        <div class="book-level"><i class="fas fa-signal"></i> مبتدئ → متقدم</div>
+      </div>
+    </a>
+    <a href="#" class="book-card reveal">
+      <div class="book-cover book-cover-2">🌐</div>
+      <div class="book-info">
+        <div class="book-cat">Web Dev</div>
+        <div class="book-title">تطوير الويب الشامل</div>
+        <div class="book-level"><i class="fas fa-signal"></i> مبتدئ → متوسط</div>
+      </div>
+    </a>
+    <a href="#" class="book-card reveal">
+      <div class="book-cover book-cover-3">⚡</div>
+      <div class="book-info">
+        <div class="book-cat">JavaScript</div>
+        <div class="book-title">JavaScript المتقدم</div>
+        <div class="book-level"><i class="fas fa-signal"></i> متوسط → متقدم</div>
+      </div>
+    </a>
+    <a href="#" class="book-card reveal">
+      <div class="book-cover book-cover-4">🗄️</div>
+      <div class="book-info">
+        <div class="book-cat">Databases</div>
+        <div class="book-title">قواعد البيانات SQL & NoSQL</div>
+        <div class="book-level"><i class="fas fa-signal"></i> مبتدئ → متقدم</div>
+      </div>
+    </a>
+  </div>
+  <div style="text-align:center;margin-top:2rem">
+    <button class="btn btn-outline" onclick="document.getElementById('add-book-modal').classList.add('active')">
+      <i class="fas fa-plus"></i> أضف كتاباً جديداً
+    </button>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos">
+  <div class="section-header reveal">
+    <span class="section-tag">// youtube_content</span>
+    <h2 class="section-title">أحدث الفيديوهات</h2>
+    <p style="color:var(--muted);margin-top:0.5rem">من قناة Modern Guide على يوتيوب</p>
+  </div>
+  <div class="videos-grid">
+    <a href="https://www.youtube.com/@ModernGuide" target="_blank" class="video-card reveal">
+      <div class="video-thumb thumb-bg-1">
+        <span class="yt-badge">YouTube</span>
+        <div class="play-btn">▶</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">تعلم Python في ساعة واحدة فقط — للمبتدئين</div>
+        <div class="video-meta"><i class="fas fa-eye"></i> 12K مشاهدة <i class="fas fa-clock"></i> 58 دقيقة</div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/@ModernGuide" target="_blank" class="video-card reveal">
+      <div class="video-thumb thumb-bg-2">
+        <span class="yt-badge">YouTube</span>
+        <div class="play-btn">▶</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">بناء API كامل مع Node.js و MongoDB</div>
+        <div class="video-meta"><i class="fas fa-eye"></i> 8K مشاهدة <i class="fas fa-clock"></i> 1:25 ساعة</div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/@ModernGuide" target="_blank" class="video-card reveal">
+      <div class="video-thumb thumb-bg-3">
+        <span class="yt-badge">YouTube</span>
+        <div class="play-btn">▶</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">React 2025 — كل ما تحتاج معرفته</div>
+        <div class="video-meta"><i class="fas fa-eye"></i> 20K مشاهدة <i class="fas fa-clock"></i> 2:10 ساعة</div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/@ModernGuide" target="_blank" class="video-card reveal">
+      <div class="video-thumb thumb-bg-4">
+        <span class="yt-badge">YouTube</span>
+        <div class="play-btn">▶</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">الذكاء الاصطناعي للمبرمجين — دليل عملي</div>
+        <div class="video-meta"><i class="fas fa-eye"></i> 15K مشاهدة <i class="fas fa-clock"></i> 1:45 ساعة</div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/@ModernGuide" target="_blank" class="video-card reveal">
+      <div class="video-thumb thumb-bg-5">
+        <span class="yt-badge">YouTube</span>
+        <div class="play-btn">▶</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Docker & Kubernetes للمبتدئين</div>
+        <div class="video-meta"><i class="fas fa-eye"></i> 9K مشاهدة <i class="fas fa-clock"></i> 1:10 ساعة</div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/@ModernGuide" target="_blank" class="video-card reveal">
+      <div class="video-thumb thumb-bg-6">
+        <span class="yt-badge">YouTube</span>
+        <div class="play-btn">▶</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Git & GitHub — من الصفر للإتقان</div>
+        <div class="video-meta"><i class="fas fa-eye"></i> 30K مشاهدة <i class="fas fa-clock"></i> 45 دقيقة</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- YouTube CTA -->
+  <div class="yt-cta reveal" style="margin-top:3rem">
+    <h3>🎬 اشترك في القناة</h3>
+    <p>Modern Guide 🧑‍💻 — محتوى تقني عربي أسبوعي لتطوير مهاراتك</p>
+    <a href="https://www.youtube.com/@ModernGuide" target="_blank" class="btn btn-yt btn-primary">
+      <i class="fab fa-youtube"></i> اشترك الآن على يوتيوب
+    </a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header reveal">
+    <span class="section-tag">// connect</span>
+    <h2 class="section-title">تواصل معي</h2>
+    <p style="color:var(--muted);margin-top:0.5rem">تابعني على منصات التواصل وكن أول من يعرف بالجديد</p>
+  </div>
+  <div class="contact-grid">
+    <a href="https://www.youtube.com/@ModernGuide" target="_blank" class="social-card soc-yt reveal">
+      <i class="fab fa-youtube"></i>
+      <span>يوتيوب</span>
+    </a>
+    <a href="#" class="social-card soc-tg reveal">
+      <i class="fab fa-telegram"></i>
+      <span>تيليجرام</span>
+    </a>
+    <a href="#" class="social-card soc-ig reveal">
+      <i class="fab fa-instagram"></i>
+      <span>إنستجرام</span>
+    </a>
+    <a href="#" class="social-card soc-tw reveal">
+      <i class="fab fa-twitter"></i>
+      <span>تويتر / X</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>صُنع بـ ❤️ بواسطة <span>Modern Guide 🧑‍💻</span> — جميع الحقوق محفوظة © <span id="year"></span></p>
+  <p style="margin-top:0.5rem;font-size:0.7rem">لأي استفسار أو تعاون: modernguide@email.com</p>
+</footer>
+
+<!-- === MODALS === -->
+<div class="modal-overlay" id="add-app-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('add-app-modal').classList.remove('active')">✕</button>
+    <h3>➕ إضافة تطبيق جديد</h3>
+    <label>اسم التطبيق</label>
+    <input type="text" id="app-name-in" placeholder="اسم التطبيق" />
+    <label>الوصف</label>
+    <textarea id="app-desc-in" rows="3" placeholder="وصف مختصر..."></textarea>
+    <label>رابط التنزيل</label>
+    <input type="url" id="app-link-in" placeholder="https://..." />
+    <label>المنصة</label>
+    <select id="app-plat-in">
+      <option>Android</option>
+      <option>iOS</option>
+      <option>Web App</option>
+      <option>Android & iOS</option>
+      <option>Desktop</option>
+    </select>
+    <button class="btn btn-primary" onclick="addApp()" style="width:100%;justify-content:center;margin-top:0.5rem">إضافة</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="add-book-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('add-book-modal').classList.remove('active')">✕</button>
+    <h3>📖 إضافة كتاب إلكتروني</h3>
+    <label>عنوان الكتاب</label>
+    <input type="text" id="book-title-in" placeholder="عنوان الكتاب" />
+    <label>التصنيف</label>
+    <input type="text" id="book-cat-in" placeholder="Python / Web Dev / ..." />
+    <label>رابط التنزيل أو الشراء</label>
+    <input type="url" id="book-link-in" placeholder="https://..." />
+    <label>المستوى</label>
+    <select id="book-level-in">
+      <option>مبتدئ</option>
+      <option>متوسط</option>
+      <option>متقدم</option>
+      <option>مبتدئ → متقدم</option>
+    </select>
+    <button class="btn btn-primary" onclick="addBook()" style="width:100%;justify-content:center;margin-top:0.5rem">إضافة</button>
+  </div>
+</div>
+
+<script>
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Floating dots
+  const dotsContainer = document.getElementById('dots');
+  for (let i = 0; i < 20; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    dot.style.left = Math.random() * 100 + 'vw';
+    dot.style.animationDuration = (8 + Math.random() * 12) + 's';
+    dot.style.animationDelay = (Math.random() * 10) + 's';
+    dot.style.width = dot.style.height = (2 + Math.random() * 3) + 'px';
+    dotsContainer.appendChild(dot);
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(els => {
+    els.forEach(el => { if (el.isIntersecting) { el.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Counter animation
+  function animateCounter(el, target, duration = 1500) {
+    let start = 0;
+    const step = target / (duration / 16);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) { start = target; clearInterval(timer); }
+      el.textContent = Math.floor(start) + '+';
+    }, 16);
+  }
+
+  const countersStarted = { done: false };
+  const counterObserver = new IntersectionObserver(els => {
+    els.forEach(el => {
+      if (el.isIntersecting && !countersStarted.done) {
+        countersStarted.done = true;
+        animateCounter(document.getElementById('cnt-apps'), 12);
+        animateCounter(document.getElementById('cnt-books'), 8);
+        animateCounter(document.getElementById('cnt-videos'), 50);
+      }
+    });
+  });
+  counterObserver.observe(document.querySelector('.stats'));
+
+  // Add App
+  function addApp() {
+    const name = document.getElementById('app-name-in').value.trim();
+    const desc = document.getElementById('app-desc-in').value.trim();
+    const link = document.getElementById('app-link-in').value.trim();
+    const plat = document.getElementById('app-plat-in').value;
+    if (!name) return alert('يرجى إدخال اسم التطبيق');
+    const card = document.createElement('a');
+    card.href = link || '#';
+    card.className = 'app-card reveal visible';
+    const icons = ['💡', '🛠️', '🔧', '📱', '🚀', '⚡', '🌍'];
+    const icon = icons[Math.floor(Math.random() * icons.length)];
+    card.innerHTML = `
+      <div class="app-icon">${icon}</div>
+      <div class="app-platform">${plat}</div>
+      <div class="app-name">${name}</div>
+      <div class="app-desc">${desc || 'تطبيق رائع من Modern Guide 🧑‍💻'}</div>
+      <div class="app-btn">اكتشف الآن <i class="fas fa-arrow-left"></i></div>
+    `;
+    document.getElementById('apps-grid').appendChild(card);
+    document.getElementById('add-app-modal').classList.remove('active');
+    ['app-name-in','app-desc-in','app-link-in'].forEach(id => document.getElementById(id).value = '');
+  }
+
+  // Add Book
+  function addBook() {
+    const title = document.getElementById('book-title-in').value.trim();
+    const cat = document.getElementById('book-cat-in').value.trim();
+    const link = document.getElementById('book-link-in').value.trim();
+    const level = document.getElementById('book-level-in').value;
+    if (!title) return alert('يرجى إدخال عنوان الكتاب');
+    const covers = ['book-cover-1','book-cover-2','book-cover-3','book-cover-4'];
+    const emojis = ['📗','📘','📙','📕','📓'];
+    const cover = covers[Math.floor(Math.random() * covers.length)];
+    const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+    const card = document.createElement('a');
+    card.href = link || '#';
+    card.className = 'book-card reveal visible';
+    card.innerHTML = `
+      <div class="book-cover ${cover}">${emoji}</div>
+      <div class="book-info">
+        <div class="book-cat">${cat || 'عام'}</div>
+        <div class="book-title">${title}</div>
+        <div class="book-level"><i class="fas fa-signal"></i> ${level}</div>
+      </div>
+    `;
+    document.querySelector('.books-grid').appendChild(card);
+    document.getElementById('add-book-modal').classList.remove('active');
+    ['book-title-in','book-cat-in','book-link-in'].forEach(id => document.getElementById(id).value = '');
+  }
+
+  // Close modal on overlay click
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('active'); });
+  });
+</script>
+</body>
+</html>
