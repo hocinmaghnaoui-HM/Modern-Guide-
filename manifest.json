@@ -1,10 +1,11 @@
 {
   "name": "Modern Guide 🧑‍💻",
   "short_name": "Modern Guide",
-  "description": "منصة تعليمية للبرمجة والتقنية — تطبيقات وكتب ودروس",
+  "description": "منصة تعليمية للبرمجة والتقنية — تطبيقات وكتب ودروس ومساعد ذكي",
   "start_url": "/index.html",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#08091a",
+  "background_color": "#080c18",
   "theme_color": "#00f5c4",
   "orientation": "portrait-primary",
   "lang": "ar",
@@ -23,7 +24,24 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["education", "productivity"],
+  "categories": ["education", "productivity", "utilities"],
   "screenshots": [],
-  "related_applications": []
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "المساعد الذكي",
+      "short_name": "AI Chat",
+      "description": "تحدث مع مساعد Modern Guide الذكي",
+      "url": "/index.html#ai-assistant",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "قناة يوتيوب",
+      "short_name": "YouTube",
+      "description": "قناة Modern Guide على يوتيوب",
+      "url": "https://youtube.com/@modernguide_03",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
 }
