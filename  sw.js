@@ -1,118 +1,94 @@
 // Modern Guide Service Worker v2.0
 const CACHE_NAME = 'modern-guide-v2';
-const STATIC_CACHE = 'static-v2';
+const OFFLINE_URL = '/Modern-Guide-/';
 
-// Files to cache for offline use
-const STATIC_FILES = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&display=swap',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css'
+const STATIC_ASSETS = [
+  '/Modern-Guide-/',
+  '/Modern-Guide-/index.html',
+  '/Modern-Guide-/manifest.json',
+  'https://cdn.tailwindcss.com',
+  'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap'
 ];
 
-// ===== INSTALL =====
+// Install event — cache static assets
 self.addEventListener('install', (event) => {
   console.log('[SW] Installing Modern Guide v2...');
   event.waitUntil(
-    caches.open(STATIC_CACHE)
-      .then(cache => {
-        // Cache files individually to avoid one failure blocking all
-        return Promise.allSettled(
-          STATIC_FILES.map(url => cache.add(url).catch(err => {
-            console.warn('[SW] Could not cache:', url, err);
-          }))
-        );
-      })
-      .then(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(STATIC_ASSETS).catch((err) => {
+        console.warn('[SW] Some assets failed to cache:', err);
+      });
+    }).then(() => self.skipWaiting())
   );
 });
 
-// ===== ACTIVATE =====
+// Activate event — clear old caches
 self.addEventListener('activate', (event) => {
   console.log('[SW] Activating Modern Guide v2...');
   event.waitUntil(
-    caches.keys().then(keys => {
+    caches.keys().then((cacheNames) => {
       return Promise.all(
-        keys
-          .filter(key => key !== CACHE_NAME && key !== STATIC_CACHE)
-          .map(key => {
-            console.log('[SW] Deleting old cache:', key);
-            return caches.delete(key);
+        cacheNames
+          .filter((name) => name !== CACHE_NAME)
+          .map((name) => {
+            console.log('[SW] Deleting old cache:', name);
+            return caches.delete(name);
           })
       );
     }).then(() => self.clients.claim())
   );
 });
 
-// ===== FETCH =====
+// Fetch event — Network first, fall back to cache
 self.addEventListener('fetch', (event) => {
-  const url = new URL(event.request.url);
-
-  // Skip API calls — always go to network
-  if (url.hostname === 'api.anthropic.com') return;
-
-  // Skip non-GET requests
+  // Skip non-GET and cross-origin API requests
   if (event.request.method !== 'GET') return;
-
-  // Skip chrome-extension and other non-http(s) requests
-  if (!url.protocol.startsWith('http')) return;
+  if (event.request.url.includes('api.anthropic.com')) return;
 
   event.respondWith(
-    caches.match(event.request).then(cached => {
-      if (cached) return cached;
-
-      return fetch(event.request)
-        .then(response => {
-          // Only cache successful responses from same origin or allowed CDNs
-          if (
-            response.ok &&
-            (url.origin === self.location.origin ||
-             url.hostname.includes('fonts.googleapis.com') ||
-             url.hostname.includes('cdnjs.cloudflare.com'))
-          ) {
-            const clone = response.clone();
-            caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-          }
-          return response;
-        })
-        .catch(() => {
+    fetch(event.request)
+      .then((response) => {
+        // Cache successful responses
+        if (response && response.status === 200) {
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseClone);
+          });
+        }
+        return response;
+      })
+      .catch(() => {
+        // Fallback to cache
+        return caches.match(event.request).then((cachedResponse) => {
+          if (cachedResponse) return cachedResponse;
           // Return offline page for navigation requests
           if (event.request.mode === 'navigate') {
-            return caches.match('/index.html');
+            return caches.match(OFFLINE_URL);
           }
         });
-    })
+      })
   );
 });
 
-// ===== PUSH NOTIFICATIONS (ready for future use) =====
+// Push notifications
 self.addEventListener('push', (event) => {
-  if (!event.data) return;
-  const data = event.data.json();
+  const data = event.data ? event.data.json() : {};
+  const title = data.title || 'Modern Guide';
   const options = {
-    body: data.body || 'محتوى جديد من Modern Guide 🧑‍💻',
-    icon: '/icons/icon-192.png',
-    badge: '/icons/icon-192.png',
+    body: data.body || 'لديك إشعار جديد',
+    icon: '/Modern-Guide-/icons/icon-192.png',
+    badge: '/Modern-Guide-/icons/icon-192.png',
     dir: 'rtl',
     lang: 'ar',
     vibrate: [200, 100, 200],
-    data: { url: data.url || '/' }
+    data: { url: data.url || '/Modern-Guide-/' }
   };
-  event.waitUntil(
-    self.registration.showNotification(data.title || 'Modern Guide 🧑‍💻', options)
-  );
+  event.waitUntil(self.registration.showNotification(title, options));
 });
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  const url = event.notification.data?.url || '/';
   event.waitUntil(
-    clients.matchAll({ type: 'window' }).then(windowClients => {
-      for (const client of windowClients) {
-        if (client.url === url && 'focus' in client) return client.focus();
-      }
-      if (clients.openWindow) return clients.openWindow(url);
-    })
+    clients.openWindow(event.notification.data.url || '/Modern-Guide-/')
   );
 });
